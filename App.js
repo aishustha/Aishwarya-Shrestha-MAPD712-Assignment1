@@ -1,21 +1,27 @@
-/**
-* Assignment 1 - Aishwarya Shrestha - 301138662
-*/
-
 import React from 'react';
 import {
   View,
   Text,
   StyleSheet,
+  TouchableOpacity,
   TextInput,
-  TouchableOpacity
 } from 'react-native';
 
 export default function Assignment01() {
   const [metric, setMetric] = React.useState(false);
+  const [height, setHeight] = React.useState(0);
+  const [weight, setWeight] = React.useState(0);
+  const [resultValue, setResultValue] = React.useState(0);
+
+  const handleCalculate = () => {
+    const resultValue = metric
+      ? (weight / height / height) * 703
+      : (weight / height / height) * 100 * 100;
+    setResultValue(resultValue.toFixed(1));
+  };
 
   return (
-    <View>
+    <View style={styles.wrapperContainer}>
       <Text style={styles.title}>BMI Calculator</Text>
       <View style={styles.buttonTabs}>
         <TouchableOpacity
@@ -44,6 +50,10 @@ export default function Assignment01() {
           style={styles.heightWeightTextInput}
           placeholder="Height"
           keyboardType="numeric"
+          value={height}
+          onChangeText={(height)=>{
+            setHeight(height)
+          }}
         />
         <Text style={styles.heightWeightTitle}>
           Weight ({metric ? 'pounds' : 'kilograms'})
@@ -52,11 +62,15 @@ export default function Assignment01() {
           style={styles.heightWeightTextInput}
           placeholder="Weight"
           keyboardType="numeric"
+          value={weight}
+          onChangeText={(weight)=>{
+            setWeight(weight)
+          }}
         />
       </View>
 
       <View style={styles.calculateButtonContent}>
-        <TouchableOpacity style={styles.calculateButton} activeOpacity={0.8}>
+        <TouchableOpacity style={styles.calculateButton} activeOpacity={0.8} onPress={handleCalculate}>
           <Text style={styles.calculateButtonText}>Calculate</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.clearButton} activeOpacity={0.8}>
@@ -66,7 +80,7 @@ export default function Assignment01() {
 
       <View style={styles.calculateResult}>
         <Text style={styles.calculateResultTitle}>Your Results</Text>
-        <Text style={styles.calculateResultValue}>0</Text>
+        <Text style={styles.calculateResultValue}>{resultValue}</Text>
         <Text style={styles.calculateResultCategory}>0</Text>
       </View>
     </View>
