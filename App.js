@@ -12,13 +12,36 @@ export default function Assignment01() {
   const [height, setHeight] = React.useState(0);
   const [weight, setWeight] = React.useState(0);
   const [resultValue, setResultValue] = React.useState(0);
+  const [resultCategory, setResultCategory] = React.useState(0);
 
   const handleCalculate = () => {
     const resultValue = metric
       ? (weight / height / height) * 703
       : (weight / height / height) * 100 * 100;
     setResultValue(resultValue.toFixed(1));
+
+    if (resultValue < 18.5) {
+     setResultCategory('Underweight');
+    } else if (resultValue >= 18.5 && resultValue < 25) {
+      setResultCategory('Normal Weight');
+    } else if (resultValue >= 25 && resultValue < 30) {
+      setResultCategory('Overweight');
+    } else if (resultValue >= 30) {
+      setResultCategory('Obesity');
+    }
+      else {
+      setResultCategory('0');
+      setResultValue('0');
+      }
   };
+
+  
+  const handleClear = () => {
+    setWeight(0);
+    setHeight(0);
+    setResultValue(0);
+    setResultCategory(0);
+  }
 
   return (
     <View style={styles.wrapperContainer}>
@@ -73,7 +96,7 @@ export default function Assignment01() {
         <TouchableOpacity style={styles.calculateButton} activeOpacity={0.8} onPress={handleCalculate}>
           <Text style={styles.calculateButtonText}>Calculate</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.clearButton} activeOpacity={0.8}>
+        <TouchableOpacity style={styles.clearButton} activeOpacity={0.8} onPress={handleClear}>
           <Text style={styles.clearButtonText}>Clear</Text>
         </TouchableOpacity>
       </View>
@@ -81,7 +104,7 @@ export default function Assignment01() {
       <View style={styles.calculateResult}>
         <Text style={styles.calculateResultTitle}>Your Results</Text>
         <Text style={styles.calculateResultValue}>{resultValue}</Text>
-        <Text style={styles.calculateResultCategory}>0</Text>
+        <Text style={styles.calculateResultCategory}>{resultCategory}</Text>
       </View>
     </View>
   );
@@ -95,7 +118,6 @@ const styles = StyleSheet.create({
     letterSpacing: 3,
     backgroundColor: '#2a1e5c',
   },
-
 
   buttonInnerText: {
     color: '#fff',
@@ -154,18 +176,6 @@ const styles = StyleSheet.create({
     marginLeft: 32,
   },
 
-  clearButtonText: {
-    backgroundColor: '#2a1e5c',
-    padding: 16,
-    letterSpacing: 3,
-    textTransform: 'uppercase',
-    fontSize: 18,
-    fontWeight: 'bold',
-    width: 105,
-    marginLeft: 24,
-    color: '#fff'
-  },
-
   calculateResult: {
     height: '100%',
     padding: 32,
@@ -196,5 +206,17 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     paddingTop: 16,
+  },
+
+  clearButtonText: {
+    backgroundColor: '#2a1e5c',
+    padding: 16,
+    letterSpacing: 3,
+    textTransform: 'uppercase',
+    fontSize: 18,
+    fontWeight: 'bold',
+    width: 105,
+    marginLeft: 24,
+    color: '#fff'
   },
 });
