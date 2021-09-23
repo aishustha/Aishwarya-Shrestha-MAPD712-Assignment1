@@ -1,3 +1,14 @@
+/*
+Student Id: 301138662
+Student Name: Aishwarya Shrestha
+
+Web Techs - Mobile Platforms - MAPD 712 - 001
+Instructor: Przemyslaw Pawluk
+
+Date of Submission: 9/23/2021
+Assignment: 1
+*/
+
 import React from 'react';
 import {
   View,
@@ -15,57 +26,68 @@ export default function Assignment01() {
   const [resultCategory, setResultCategory] = React.useState(0);
 
   const handleCalculate = () => {
+    //formulae
     const resultValue = metric
       ? (weight / height / height) * 703
       : (weight / height / height) * 100 * 100;
     setResultValue(resultValue.toFixed(1));
 
+    //bmi categories
     if (resultValue < 18.5) {
-     setResultCategory('Underweight');
+      setResultCategory('Underweight');
     } else if (resultValue >= 18.5 && resultValue < 25) {
       setResultCategory('Normal Weight');
     } else if (resultValue >= 25 && resultValue < 30) {
       setResultCategory('Overweight');
     } else if (resultValue >= 30) {
       setResultCategory('Obesity');
-    }
-      else {
+    } else {
       setResultCategory('0');
       setResultValue('0');
-      }
+    }
   };
 
-  
+  //reset
   const handleClear = () => {
     setWeight(0);
     setHeight(0);
     setResultValue(0);
     setResultCategory(0);
-  }
+  };
 
   return (
     <View style={styles.wrapperContainer}>
       <Text style={styles.title}>BMI Calculator</Text>
+
+      {/* Switch Button for Standard and Metric */}
       <View style={styles.buttonTabs}>
+        {/* Standard */}
         <TouchableOpacity
           style={styles.buttonInnerTabs}
           activeOpacity={0.8}
           onPress={() => setMetric(false)}
-          style={{ backgroundColor: metric ? '#ec4269cc' : '#EC4269', width: '50%'}}
-          >
+          style={{
+            backgroundColor: metric ? '#ec4269cc' : '#EC4269',
+            width: '50%',
+          }}>
           <Text style={styles.buttonInnerText}>Standard</Text>
         </TouchableOpacity>
+        {/* Metric */}
         <TouchableOpacity
           style={styles.buttonInnerTabs}
           activeOpacity={0.8}
           onPress={() => setMetric(true)}
-          style={{ backgroundColor: metric ? '#EC4269' : '#ec4269cc', width: '50%'}}
-          >
+          style={{
+            backgroundColor: metric ? '#EC4269' : '#ec4269cc',
+            width: '50%',
+          }}>
           <Text style={styles.buttonInnerText}>Metric</Text>
         </TouchableOpacity>
       </View>
 
+      {/* Textinput Fields for Height and Weight */}
       <View style={styles.inputContent}>
+        {/* Height */}
         <Text style={styles.heightWeightTitle}>
           Height ({metric ? 'inchs' : 'centimeters'})
         </Text>
@@ -74,10 +96,11 @@ export default function Assignment01() {
           placeholder="Height"
           keyboardType="numeric"
           value={height}
-          onChangeText={(height)=>{
-            setHeight(height)
+          onChangeText={height => {
+            setHeight(height);
           }}
         />
+        {/* Weight */}
         <Text style={styles.heightWeightTitle}>
           Weight ({metric ? 'pounds' : 'kilograms'})
         </Text>
@@ -86,21 +109,31 @@ export default function Assignment01() {
           placeholder="Weight"
           keyboardType="numeric"
           value={weight}
-          onChangeText={(weight)=>{
-            setWeight(weight)
+          onChangeText={weight => {
+            setWeight(weight);
           }}
         />
       </View>
 
+      {/* Calculate and Clear Buttons */}
       <View style={styles.calculateButtonContent}>
-        <TouchableOpacity style={styles.calculateButton} activeOpacity={0.8} onPress={handleCalculate}>
+        {/* Calculate */}
+        <TouchableOpacity
+          style={styles.calculateButton}
+          activeOpacity={0.8}
+          onPress={handleCalculate}>
           <Text style={styles.calculateButtonText}>Calculate</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.clearButton} activeOpacity={0.8} onPress={handleClear}>
+        {/* Clear */}
+        <TouchableOpacity
+          style={styles.clearButton}
+          activeOpacity={0.8}
+          onPress={handleClear}>
           <Text style={styles.clearButtonText}>Clear</Text>
         </TouchableOpacity>
       </View>
 
+      {/* BMI Results and BMI Categories */}
       <View style={styles.calculateResult}>
         <Text style={styles.calculateResultTitle}>Your Results</Text>
         <Text style={styles.calculateResultValue}>{resultValue}</Text>
@@ -110,6 +143,7 @@ export default function Assignment01() {
   );
 }
 
+//styles
 const styles = StyleSheet.create({
   title: {
     color: '#fff',
@@ -188,7 +222,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
-    paddingBottom: 12
+    paddingBottom: 12,
   },
 
   calculateResultValue: {
@@ -217,6 +251,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     width: 105,
     marginLeft: 24,
-    color: '#fff'
+    color: '#fff',
   },
 });
